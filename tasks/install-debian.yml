@@ -1,5 +1,11 @@
 ---
 
+- name: Install MySQL deps
+  apt:
+    name: libmysqlclient-dev
+  when: (mysql in airflow_extra_packages) or
+        (alldbs in airflow_extra_packages)
+
 - name: Install python-pip
   apt:
     name: python-pip

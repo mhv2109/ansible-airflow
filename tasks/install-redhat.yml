@@ -1,5 +1,11 @@
 ---
 
+- name: Install MySQL deps
+  yum:
+    name: mysql-devel
+  when: (mysql in airflow_extra_packages) or
+        (alldbs in airflow_extra_packages)
+
 - name: Install dependency packages
   yum:
     name: "{{ item }}"
