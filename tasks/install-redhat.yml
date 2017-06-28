@@ -4,7 +4,8 @@
   yum:
     name: mysql-devel
   when: (mysql in airflow_extra_packages) or
-        (alldbs in airflow_extra_packages)
+        (alldbs in airflow_extra_packages) or
+        (all in airflow_extra_packages)
 
 - name: Install dependency packages
   yum:
