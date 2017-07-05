@@ -7,12 +7,28 @@
   pip:
     name: apache-airflow
     version: "{{ airflow_version }}"
+    virtualenv: "{{ airflow_virtualenv }}"
+  when: airflow_virtualenv is defined
+
+- name: Install airflow
+  pip:
+    name: apache-airflow
+    version: "{{ airflow_version }}"
+  when: airflow_virtualenv is not defined  
 
 # Work around for the pip module not quoting "apache-airflow[module, module]"
 - name: Install airflow extra packages
   pip:
     name: apache-airflow[{{ item }}]
+    virtualenv: "{{ airflow_virtualenv }}"
   with_items: "{{ airflow_extra_packages }}"
+  when: airflow_virtualenv is defined
+
+- name: Install airflow extra packages
+  pip:
+    name: apache-airflow[{{ item }}]
+  with_items: "{{ airflow_extra_packages }}"
+  when: airflow_virtualenv is not defined
 
 - name: Create airflow user
   user:
